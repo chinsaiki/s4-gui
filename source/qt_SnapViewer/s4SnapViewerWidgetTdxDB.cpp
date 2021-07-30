@@ -135,9 +135,7 @@ void s4SnapViewerWidgetTdxDB::openTdxSnapTab(const std::string& db_name, const s
 		}
 
 		infSnap5xQ_ptr pSnapQ = std::make_shared<infSnap5xQ_t>();
-		pSnapQ->setDB(true, path);
-		pSnapQ->set_dbTbl_name(table_name);
-		pSnapQ->fromDB();
+		pSnapQ->fromDB(path, table_name, true);
 
 		std::string snap_tab_name_s = db_name + "-" + table_name;
 		QString snap_tab_name(snap_tab_name_s.c_str());

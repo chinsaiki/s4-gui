@@ -123,13 +123,12 @@ void SqlViewer::onOpenDB_orders(void)
 
 void SqlViewer::openTableTab_orders(const std::string& table_name)
 {
-    S4::sqlite::s4_history_trade_t_dbTbl history_tbl;
     //std::string condition = " WHERE mktCodeStr = '" + stkName + "'";
     //if (stgName.size()) {
     //    condition += " AND stgName = '" + stgName + "'";
     //}
     std::vector<struct s4_history_trade_t> history_trade_data;
-    _pHistory_db->read_table<S4::sqlite::s4_history_trade_t_dbTbl::data_t>(&history_tbl, table_name, history_trade_data);
+    _pHistory_db->read_table<S4::sqlite::s4_history_trade_t_dbTbl>(table_name, history_trade_data);
     std::vector<std::string> col_name = _pHistory_db->get_colum_list(table_name);
 
     orderModel* model = new orderModel(this);

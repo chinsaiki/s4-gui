@@ -52,12 +52,11 @@ void s4qt_data_if::loadOrdres(const std::string & stkName, const std::string & s
 	std::filesystem::path db_history_path = db_root_path / db.history_trade;
 	sqlite::DB_t history_db(db_history_path.string());
 	
-	S4::sqlite::s4_history_trade_t_dbTbl history_tbl;
 	std::string condition = " WHERE mktCodeStr = '" + stkName + "'";
 	if (stgName.size()) {
 		condition += " AND stgName = '" + stgName + "'";
 	}
-	history_db.read_table< S4::sqlite::s4_history_trade_t_dbTbl::data_t>(&history_tbl, table_name, history_trade_data, condition);
+	history_db.read_table<S4::sqlite::s4_history_trade_t_dbTbl>(table_name, history_trade_data, condition);
 
 	LCL_INFO("loadOrdres stk={:} stg={:} tbl={:} done, size={:}", stkName, stgName, table_name, history_trade_data.size());
 
