@@ -54,7 +54,7 @@ namespace S4
             int64_t         LastQty;
             QString         ExecType;
             QString        TransactTime;
-            enum class unionType_t unionType;
+            enum unionType_t unionType;
         };
 
         QList<unionExec_t> _data;
