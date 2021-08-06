@@ -111,8 +111,9 @@ void snapInstrument_Kline_view::paintCrosshair()
 		_scene->removeItem(_crossLine);
 	}
     QPointF scene_label_pos;
-    QPointF label = ((snapInstrument_Kline_scene*)_scene)->get_label_near(_scene_mouse, scene_label_pos);
-	_crossLine = paintCrosshairAt(scene_label_pos);
+    //QPointF label = 
+        ((snapInstrument_Kline_scene*)_scene)->get_label_near(_scene_mouse, scene_label_pos);
+    _crossLine = paintCrosshairAt(scene_label_pos);
 }
 
 

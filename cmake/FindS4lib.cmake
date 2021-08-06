@@ -7,7 +7,7 @@
 
 set(INCLUDE_PREX fpga)
 set(HEADER_FILE common/s4conf.h)
-SET(S4lib_NAMES S4lib sqlite3 SQLiteCpp zlib zlibstatic zlibd zlibstaticd)
+SET(S4lib_NAMES S4lib SQLiteCpp sqlite3 zlib zlibstatic zlibd zlibstaticd)
 
 FIND_PATH(S4lib_INCLUDE_DIR ${HEADER_FILE}
         HINTS

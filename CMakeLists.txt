@@ -140,7 +140,7 @@ endif()
 # list(APPEND LINKLIBS cpp_common)  #not ready
 
 if(NOT MSVC)
-  list(APPEND LINKLIBS stdc++fs)
+  list(APPEND LINKLIBS stdc++fs dl)
 endif()
 
 ## System directories
