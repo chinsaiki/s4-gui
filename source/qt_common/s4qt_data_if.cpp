@@ -9,7 +9,7 @@ CREATE_LOCAL_LOGGER("qt_data_if")
 namespace S4 {
 namespace QT{
 
-void s4qt_data_if::getInfo(const std::string & stkName, const struct S4::stkInfoReq_t& infoReq, class S4::stkInfo_t*& info)
+const S4::stkInfo_t* s4qt_data_if::getInfo(const std::string & stkName, const struct S4::stkInfoReq_t& infoReq)
 {
     if (!_pData_if){
         _pData_if = std::make_shared<data_if_t>(1);
@@ -34,14 +34,13 @@ void s4qt_data_if::getInfo(const std::string & stkName, const struct S4::stkInfo
 	}
 
 	if (_pData_if->getNowLib()->count(stkName) == 0) {
-		info = nullptr;
 		LCL_WARN("no such instrument: {:}", stkName);
-		return;
+		return nullptr;
 	}
 
-	info = _pData_if->getNowLib()->get(stkName);
+	const S4::stkInfo_t* info = _pData_if->getNowLib()->get(stkName);
 	LCL_INFO("getInfo {:} successd: {:} ~ {:} = {:}", stkName, info->pDayKQ->front()->_date, info->pDayKQ->back()->_date, info->pDayKQ->size());
-	info->newAtBack();
+    return info;
 }
 
 void s4qt_data_if::loadOrdres(const std::string & stkName, const std::string & stgName, const std::string & table_name, std::vector<s4_history_trade_t>& history_trade_data)

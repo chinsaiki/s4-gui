@@ -79,9 +79,9 @@ std::shared_ptr<infKQ_t> Kinstrument_indicator_scene::check_data_volumn(void) co
 {
     std::shared_ptr<infKQ_t> pInfoKQ;
     if (_indCtx.timeMode == timeMode_t::tDAY){
-        pInfoKQ = _data_panel->info.pDayKQ;
+        pInfoKQ = _data_panel->info->pDayKQ;
     }else if (_indCtx.timeMode == timeMode_t::tMINU){
-        pInfoKQ = _data_panel->info.pMinuKQ;
+        pInfoKQ = _data_panel->info->pMinuKQ;
     }else{  //TODO
         return pInfoKQ;
     }

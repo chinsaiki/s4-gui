@@ -124,11 +124,6 @@ s4Kviewer::s4Kviewer(QWidget *parent) :
 
 	_data_if = std::make_shared<S4::QT::s4qt_data_if>();
 
-	connect(this, SIGNAL(signal_getInfo(const std::string &, const struct S4::stkInfoReq_t&, class S4::stkInfo_t*&)),
-		_data_if.get(), SLOT(getInfo(const std::string &, const struct S4::stkInfoReq_t&, class S4::stkInfo_t*&)));
-	connect(this, SIGNAL(signal_loadOrdres(const std::string &, const std::string &, const std::string &, std::vector<S4::s4_history_trade_t>&)),
-		_data_if.get(), SLOT(loadOrdres(const std::string &, const std::string &, const std::string &, std::vector<S4::s4_history_trade_t>&)));
-
 	onCallConsole();
 
 #ifndef NDEBUG
@@ -185,11 +180,6 @@ void s4Kviewer::onOpen()
 
 	_data_if = std::make_shared<S4::QT::s4qt_data_if>();
 
-	connect(this, SIGNAL(signal_getInfo(const std::string&, const struct S4::stkInfoReq_t&, class S4::stkInfo_t*&)),
-		_data_if.get(), SLOT(getInfo(const std::string&, const struct S4::stkInfoReq_t&, class S4::stkInfo_t*&)));
-	connect(this, SIGNAL(signal_loadOrdres(const std::string&, const std::string&, const std::string&, std::vector<S4::s4_history_trade_t>&)),
-		_data_if.get(), SLOT(loadOrdres(const std::string&, const std::string&, const std::string&, std::vector<S4::s4_history_trade_t>&)));
-
 	onTcpSetup();
 
 	//onLoadConf();
@@ -221,7 +211,6 @@ void s4Kviewer::load(const std::string& stkName, const std::string& stgName, con
 {
 
 	S4::stkInfoReq_t infoReq;
-	S4::stkInfo_t* pInfo;
 	std::vector<S4::s4_history_trade_t> history_trade_data;
 
 	infoReq.endDate = _DOOMSDAY_;
@@ -232,10 +221,11 @@ void s4Kviewer::load(const std::string& stkName, const std::string& stgName, con
 	infoReq.ma_scope_list = vector<int>{5, 20, 60, 120};
 
 
-	emit signal_getInfo(stkName, infoReq, pInfo);
+	const S4::stkInfo_t* pInfo = _data_if->getInfo(stkName, infoReq);
 
 	if (orderTblName.size() != 0) {
-		emit signal_loadOrdres(stkName, stgName, orderTblName, history_trade_data);
+		// emit signal_loadOrdres(stkName, stgName, orderTblName, history_trade_data);
+        _data_if->loadOrdres(stkName, stgName, orderTblName, history_trade_data);
 	}
 
 	if (!pInfo) {
@@ -245,7 +235,7 @@ void s4Kviewer::load(const std::string& stkName, const std::string& stgName, con
 
 	_data_panel.infoReq = infoReq;
 	_data_panel.history = history_trade_data;
-	_data_panel.info = *pInfo;
+	_data_panel.info = pInfo;
 	showData();
 }
 

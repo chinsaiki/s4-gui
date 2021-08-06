@@ -23,7 +23,7 @@ public:
         //day
         Kinstrument* K = new Kinstrument(this);
         K->setInstrument(data_panel);
-        int i = addTab(K, data_panel.info.name().c_str());
+        int i = addTab(K, data_panel.info->name().c_str());
         setCurrentIndex(i);
 	}
 

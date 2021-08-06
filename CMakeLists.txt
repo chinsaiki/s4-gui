@@ -41,7 +41,7 @@ set(INSTALL_INC_DIR "${CMAKE_INSTALL_PREFIX}/include" CACHE PATH "Installation d
 
 ## Thirdparty
 # add_subdirectory("thirdparty")
-add_definitions(-DCPPHTTPLIB_ZLIB_SUPPORT=on)
+add_definitions(-DCPPHTTPLIB_ZLIB_SUPPORT)
 
 ## CMake module path
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
