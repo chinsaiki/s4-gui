@@ -30,15 +30,23 @@ void Kinstrument_scene::initSceneCanvas()
 	_ctx.set_val_w_min(_ctx.val_w_min() - _ctx.val_w_min_margin());
 
 	qreal height;
-	if (_isLogCoor) {	
+	if (_coor_type == coor_type_t::LOG) {	
 		height = _ctx.val_h_10percent_pxl() * qLn(_ctx.val_h_max() / _ctx.val_h_min()) / qLn(1.0 + _grid_h_gap);
 	}
-	else {
+	else if (_coor_type == coor_type_t::PERCENT) {
 		height = (_ctx.val_h_max() - _ctx.val_h_min())*10.0 / _ctx.val_h_min() * _ctx.val_h_10percent_pxl();
 		if (height < 100) {
 			height = 100;
 		}
-	}
+	}else{//value
+		height = (_ctx.val_h_max() - _ctx.val_h_min());
+		if (height > 960) {
+			height = 960;
+		}
+		else if (height < 100) {
+			height = 100;
+		}
+    }
 	qreal width = _ctx.val_w_max() - _ctx.val_w_min();
 	width *= _ctx.val_w_pxl();
 	
@@ -57,7 +65,7 @@ void Kinstrument_scene::initSceneCanvas()
 qreal Kinstrument_scene::val_h_to_y(qreal val) const
 {
 	qreal y_o;
-	if (!_isLogCoor) {
+	if (_coor_type != coor_type_t::LOG) {
 		y_o = height() - (val - _ctx.val_h_min()) / _h_val_pxl;	//
 	}
 	else {
@@ -68,7 +76,7 @@ qreal Kinstrument_scene::val_h_to_y(qreal val) const
 
 qreal Kinstrument_scene::y_to_val_h(qreal y) const
 {
-	if (!_isLogCoor) {
+	if (_coor_type != coor_type_t::LOG) {
 		return _ctx.val_h_max() - y * _h_val_pxl;
 	}
 	else

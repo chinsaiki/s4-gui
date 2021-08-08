@@ -62,5 +62,10 @@ void Kinstrument::slot_next_trade(int seq)
 	_K_tab->slot_next_trade(seq);
 }
 
+void Kinstrument::slot_centerOn_day(int date)
+{
+	_K_tab->slot_centerOn_day(date);
+}
+
 } // namespace QT
 } // namespace S4

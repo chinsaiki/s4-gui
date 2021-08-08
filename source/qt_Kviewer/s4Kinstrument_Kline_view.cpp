@@ -93,6 +93,30 @@ void Kinstrument_Kline_view::slot_next_trade(int next)
     
 }
 
+void Kinstrument_Kline_view::slot_centerOn_day(int date)
+{
+    if (date < 19880101)
+        date = 19880101;
+    time_t utcTime = date_to_utc(date);
+    centerOnLabelW((qreal)utcTime);
+}
+
+void Kinstrument_Kline_view::centerOnLabelW(qreal label_w)
+{
+    int seq = _scene->label_w_to_val_w(label_w);
+    QPointF valPos;
+    bool valid = _scene->get_valPos(seq, valPos);
+    if (!valid){
+        Kinstrument_view::fitView();
+        return;
+    }
+    
+	centerOn(_scene->val_w_to_x(valPos.x()), _scene->val_h_to_y(valPos.y()));
+	onViewChange();
+	std::shared_ptr<view_event_scene_center_change> e_center = std::make_shared<view_event_scene_center_change>((_scene_lu + _scene_rd) / 2);
+	emit signalViewEvent(e_center);
+
+}
 
 } // namespace QT
 } // namespace S4

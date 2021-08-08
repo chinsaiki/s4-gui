@@ -43,7 +43,7 @@ Kinstrument_view::Kinstrument_view(Kinstrument_scene*scene, QWidget *parent):
 qreal Kinstrument_view::val_to_sceneh(qreal val)
 {
 	qreal y_o;
-	if (!_isLogCoor) {
+	if (_coor_type != coor_type_t::LOG) {
 		qreal p_gap = _scene->height() / (_scene->getCtx().val_h_max() - _scene->getCtx().val_h_min());
 		y_o = p_gap * (val - _scene->getCtx().val_h_min()) + _scene->sceneRect().y();
 	}
@@ -57,7 +57,7 @@ qreal Kinstrument_view::val_to_sceneh(qreal val)
 
 qreal Kinstrument_view::sceneh_to_val(qreal h)
 {
-	if (!_isLogCoor) {
+	if (_coor_type != coor_type_t::LOG) {
 		return (_scene->getCtx().val_h_max() - _scene->getCtx().val_h_min()) * h / _scene->height() + _scene->getCtx().val_h_min();
 	}
 	else
@@ -572,7 +572,7 @@ void Kinstrument_view::paintGridLines()
 	yPen.setCosmetic(true);
 
 
-	for (qreal i = _ctx.sc_val_h_min; i < _ctx.sc_val_h_max* (1.01 + _grid_h_gap); i = _isLogCoor? i*(1.0 + _grid_h_gap) : i+_ctx.sc_val_h_max * _grid_h_gap) {
+	for (qreal i = _ctx.sc_val_h_min; i < _ctx.sc_val_h_max* (1.01 + _grid_h_gap); i = (_coor_type == coor_type_t::LOG)? i*(1.0 + _grid_h_gap) : i+_ctx.sc_val_h_max * _grid_h_gap) {
 		qreal y = _scene->val_h_to_y(i);
 		QGraphicsLineItem* line = new QGraphicsLineItem(_scene->sceneRect().x(), y, _scene->sceneRect().x() + _scene->sceneRect().width(), y);
 		line->setPen(xPen);
@@ -601,7 +601,7 @@ void Kinstrument_view::paintGridLabels()
 	}
 	QList<QGraphicsItem*> gridLabels;
 
-	for (qreal i = _ctx.sc_val_h_min; i < _ctx.sc_val_h_max * (1.01 + _grid_h_gap); i = _isLogCoor ? i * (1.0 + _grid_h_gap) : i + _ctx.sc_val_h_max * _grid_h_gap) {
+	for (qreal i = _ctx.sc_val_h_min; i < _ctx.sc_val_h_max * (1.01 + _grid_h_gap); i = (_coor_type == coor_type_t::LOG) ? i * (1.0 + _grid_h_gap) : i + _ctx.sc_val_h_max * _grid_h_gap) {
 		qreal y = _scene->val_h_to_y(i);
 		if (y < _scene_lu.y() || y > _scene_rd.y())
 			continue;
@@ -647,8 +647,28 @@ void Kinstrument_view::fitView()
 	emit signalViewEvent(e_trans);
 }
 
+void Kinstrument_view::centerOnLabelWH(qreal label_w, qreal label_h)
+{
+    qreal x = _scene->label_w_to_x(label_w);
+    qreal y = _scene->label_h_to_y(label_h);
+	centerOn(x, y);
+	onViewChange();
+	std::shared_ptr<view_event_scene_center_change> e_center = std::make_shared<view_event_scene_center_change>((_scene_lu + _scene_rd) / 2);
+	emit signalViewEvent(e_center);
+	std::shared_ptr<view_event_transform_change> e_trans = std::make_shared<view_event_transform_change>(this->transform(), false);
+	emit signalViewEvent(e_trans);
+}
+
+void Kinstrument_view::centerOnLabelW(qreal label_w)
+{
+
+}
 
 
+void Kinstrument_view::centerOnLabelH(qreal label_h)
+{
+    
+}
 
 }
 }

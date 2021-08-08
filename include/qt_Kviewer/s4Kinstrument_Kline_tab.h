@@ -48,6 +48,7 @@ public slots:
 	//seq >=0: next; <0: last
 	void slot_next_trade(int seq);
 
+	void slot_centerOn_day(int date);
 protected:
     std::shared_ptr<data_panel_t> _data_panel;
     timeMode_t _timeMode = timeMode_t::tUNKNOWN;

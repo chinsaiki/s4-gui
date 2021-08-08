@@ -30,11 +30,11 @@ void Kinstrument_indicator_tab::paint(Kinstrument_indicator_scene::ind_type type
     indCtx.timeMode = timeMode;
 
     Kinstrument_indicator_scene* scene = new Kinstrument_indicator_scene(this);
-	scene->setLogCoor(false);
+    scene->setCoorType(coor_type_t::VALUE);
     scene->paint(indCtx, _data_panel);
 
     Kinstrument_indicator_view* view = new Kinstrument_indicator_view(scene, this);
-	view->setLogCoor(false);
+    view->setCoorType(coor_type_t::VALUE);
 	view->setTimeMode(timeMode);
     view->paint();
     int i = addTab(view, indCtx.toString());

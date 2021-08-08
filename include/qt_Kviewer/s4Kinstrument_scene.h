@@ -11,6 +11,12 @@
 namespace S4 {
 namespace QT {
 
+enum class coor_type_t{
+    LOG,
+    PERCENT,
+    VALUE
+};
+
 //指标和K线画布的基类
 class Kinstrument_scene : public QGraphicsScene
 {
@@ -95,9 +101,13 @@ public:
         return _ctx;
     }
 
-    inline void setLogCoor(bool log)
+    inline void setLogCoor()
     {
-        _isLogCoor = log;
+        _coor_type = coor_type_t::LOG;
+    }
+
+    inline void setCoorType(coor_type_t v){
+        _coor_type = v;
     }
 
 	//Only for log coordinate, must be the same as view, 0.1 = 10%, 0.2 = 20%
@@ -167,7 +177,7 @@ protected:
 protected:
     QPointF _pos;
     ctx_t _ctx;
-    bool _isLogCoor = true; //TODO: percentCoor
+    coor_type_t _coor_type = coor_type_t::LOG;
     qreal _h_val_pxl = 1;
     qreal _h_val_pxl_base = 1;
     qreal _h_log_pxl = 1;

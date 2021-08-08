@@ -1,7 +1,9 @@
 #include "common/s4logger.h"
 #include "trade/s4_history_trade.h"
 #include "jsonTypes/s4_history_trade_t_dbTbl.h"
+#include "jsonTypes/dayK_dsx_raw_t_dbTbl_ro.h"
 #include "datasource/ds_dayK_db_ifeng.h"
+#include "datasource/ds_dayK_db_dsx.h"
 #include "qt_common/s4qt_data_if.h"
 
 CREATE_LOCAL_LOGGER("qt_data_if")
@@ -15,9 +17,21 @@ const S4::stkInfo_t* s4qt_data_if::getInfo(const std::string & stkName, const st
         _pData_if = std::make_shared<data_if_t>(1);
         
         std::filesystem::path db_root = glb_conf::pInstance()->db().root;
-        std::filesystem::path db_dayK_ifeng = db_root / glb_conf::pInstance()->db().dayK_ifeng;
-        std::shared_ptr<datasource_t> pDs_dayK_db_ifeng = std::make_shared<ds_dayK_db_ifeng_t>(db_dayK_ifeng);
-        _pData_if->setDatasource(timeMode_t::tDAY, pDs_dayK_db_ifeng);
+
+		try
+		{
+			std::filesystem::path db_dayK_dsx = db_root / glb_conf::pInstance()->db().dayK_lclx;
+			std::shared_ptr<datasource_t> pDs_dayK_db = std::make_shared<ds_dayK_db_dsx_t>(db_dayK_dsx);
+			_pData_if->setDatasource(timeMode_t::tDAY, pDs_dayK_db);
+		}
+		catch (...)
+		{
+			std::filesystem::path db_dayK_ifeng = db_root / glb_conf::pInstance()->db().dayK_ifeng;
+			std::shared_ptr<datasource_t> pDs_dayK_db_ifeng = std::make_shared<ds_dayK_db_ifeng_t>(db_dayK_ifeng);
+			_pData_if->setDatasource(timeMode_t::tDAY, pDs_dayK_db_ifeng);
+		}
+
+
     }
 
 	if (_pData_if->getNowLib() == nullptr || _pData_if->getNowLib()->count(stkName) == 0) {

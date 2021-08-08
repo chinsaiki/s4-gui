@@ -16,6 +16,7 @@ s4console::s4console(QWidget *parent) :
 	_cli = new cliparser(this);
     connect(_cli, SIGNAL(signal_load(const std::string &, const std::string &, const std::string &)),
         this, SLOT(emit_load(const std::string &, const std::string &, const std::string &)));
+    connect(_cli, &cliparser::signal_centerOn_day, this, &s4console::emit_centerOn_day);
 
     QWidget * widget = new QWidget(this);
 

@@ -35,6 +35,11 @@ public slots:
         K->slot_next_trade(seq);
 	}
 
+	void slot_centerOn_day(int date)
+	{
+		Kinstrument* K = (Kinstrument*)currentWidget();
+        K->slot_centerOn_day(date);
+	}
 };
 
 

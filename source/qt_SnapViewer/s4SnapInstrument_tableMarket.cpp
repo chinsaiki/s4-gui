@@ -99,10 +99,10 @@ void snapInstrument_tableMarket::addSnaps(const infSnap5xQ_ptr& pSnapQ)
 	QAbstractItemModel* infos = _info_tv->model();
     ((snapTableModel_snapInfo*)infos)->refresh(pSnapQ->back().get());
 
-	((snapInstrument_Kline_scene*)(_snap_Kview->scene()))->setLogCoor(false);
+	((snapInstrument_Kline_scene*)(_snap_Kview->scene()))->setCoorType(coor_type_t::PERCENT);
 	((snapInstrument_Kline_scene*)(_snap_Kview->scene()))->paint(pSnapQ);
 
-	_snap_Kview->setLogCoor(false);
+    _snap_Kview->setCoorType(coor_type_t::PERCENT);
 	_snap_Kview->paint(pSnapQ);
 
     connect(_snap_Kview, &snapInstrument_Kline_view::signal_mouseSnapTime, this, &snapInstrument_tableMarket::slot_mouseSnapTimeChanged);

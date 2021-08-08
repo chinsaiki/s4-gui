@@ -12,7 +12,7 @@ CREATE_LOCAL_LOGGER("QT-view")
 
 int main(int argc, char *argv[])
 {
-	S4::glb_conf::pInstance()->load("../json_template/glb_conf_ctx_t.json");//for debug
+	S4::glb_conf::pInstance()->load("../../s4-lib/confs/glb_conf_5950X.json");//for debug
 
 	QApplication app(argc, argv);
     LCL_INFO("ScrollBar w={:}", app.style()->pixelMetric(QStyle::PM_ScrollBarExtent));

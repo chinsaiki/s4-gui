@@ -26,9 +26,13 @@ public:
 //signals:
 //    void cursorPosition(QPointF);
 
-    inline void setLogCoor(bool log)    //scene需要同步坐标类型
+    inline void setLogCoor()    //scene需要同步坐标类型
     {
-        _isLogCoor = log;
+        _coor_type = coor_type_t::LOG;
+    }
+
+    inline void setCoorType(coor_type_t v){
+        _coor_type = v;
     }
 
     //only for grid line&label
@@ -67,6 +71,11 @@ public:
 
     virtual void fitView();
 
+    virtual void centerOnLabelWH(qreal label_w, qreal label_h);
+
+    virtual void centerOnLabelW(qreal label_x);
+
+    virtual void centerOnLabelH(qreal label_y);
 signals:
 	//void signalScaleChanged(qreal x_scale, qreal y_scale);
 	//void signalSetTransform(const QTransform&, bool);
@@ -132,7 +141,7 @@ protected:
     QTransform _antiT;
     QPointF _XYantiScale;
 
-    bool _isLogCoor = true;
+    coor_type_t _coor_type = coor_type_t::LOG;
     qreal _grid_h_gap = 0.1;  //10%
     qreal _grid_w_gap = 20;
     ctx_t _ctx;

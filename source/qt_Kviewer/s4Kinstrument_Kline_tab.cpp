@@ -41,6 +41,12 @@ void Kinstrument_Kline_tab::slot_next_trade(int seq)
 	_K_view->slot_next_trade(seq);
 }
 
+void Kinstrument_Kline_tab::slot_centerOn_day(int date)
+{
+	Kinstrument_Kline_view* _K_view = (Kinstrument_Kline_view*)currentWidget();
+	_K_view->slot_centerOn_day(date);
+}
+
 void Kinstrument_Kline_tab::slotScaleChanged_day(qreal x_scale, qreal y_scale)
 {
 	emit signalScaleChanged(x_scale, y_scale, timeMode_t::tDAY);
