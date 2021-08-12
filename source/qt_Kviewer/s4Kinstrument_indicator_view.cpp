@@ -1,5 +1,9 @@
 
 #include "qt_Kviewer/s4Kinstrument_indicator_view.h"
+#include "qt_Kviewer/s4KlogicCross.h"
+
+#define VIEW_Z 100
+#define VIEW_CROSS (VIEW_Z+5)
 
 namespace S4{
 namespace QT{
@@ -92,6 +96,37 @@ void Kinstrument_indicator_view::slotViewEvent(std::shared_ptr<view_event> event
 
 	Kinstrument_view::slotViewEvent(event);
 }
+//
+//void Kinstrument_indicator_view::slot_crossOn_day(int date)
+//{
+//	if (_timeMode != timeMode_t::tDAY)
+//		return;
+//
+//	if (date < 19880101)
+//		date = 19880101;
+//	time_t utcTime = date_to_utc(date);
+//	crossOnLabelW((qreal)utcTime);
+//}
+//
+//
+//void Kinstrument_indicator_view::crossOnLabelW(qreal label_w)
+//{
+//	int seq = _scene->label_w_to_val_w(label_w);
+//	QPointF valPos;
+//	bool valid = _scene->get_valPos(seq, valPos);
+//	if (!valid) {
+//		return;
+//	}
+//
+//	KlogicCross_t* cr = new KlogicCross_t(_scene);
+//	cr->setLineWidth(1);
+//	cr->setValue(valPos.x(), valPos.y(), 60, 20, 0);
+//	cr->setColor(_colorpalette->curve[2].back); //red
+//	cr->mkGroupItems();
+//	cr->setZValue(VIEW_CROSS);
+//	_scene->addItem(cr);
+//}
+
 
 } // namespace QT
 } // namespace S4

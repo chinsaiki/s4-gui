@@ -37,6 +37,7 @@ public slots:
 	void onButton_last_trade(void);
 
     void slot_centerOn_day(int date);
+	void slot_crossOn_day(int date);
 signals:
 	void signal_getInfo(const std::string & stkName, const struct S4::stkInfoReq_t& infoReq, class S4::stkInfo_t*& info);
 	void signal_loadOrdres(const std::string & stkName, const std::string & stgName, const std::string & orderTblName, std::vector<S4::s4_history_trade_t>& history_trade_data);

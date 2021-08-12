@@ -209,10 +209,10 @@ void snapInstrument_Kline_scene::calcCtx(void)
     _w_map_label.clear();
     for(const auto& d : *_pInfoKQ)
     {
-        if (d->high > ctx.val_h_max()){
+        if (d->high_fq() > ctx.val_h_max()){
             ctx.set_val_h_max(d->high_fq());
         }
-        if (d->low < ctx.val_h_min()){
+        if (d->low_fq() < ctx.val_h_min()){
             ctx.set_val_h_min(d->low_fq());
         }
         ctx.set_val_w_max(n);

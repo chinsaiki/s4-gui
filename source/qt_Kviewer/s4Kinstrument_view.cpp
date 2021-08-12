@@ -4,11 +4,13 @@
 #include <QtCore/qmath.h>
 #include <QScrollBar>
 #include "qt_Kviewer/s4Klabel.h"
+#include "qt_Kviewer/s4KlogicCross.h"
 
 namespace S4 {
 namespace QT {
 
 #define VIEW_Z 100 //TODO:global configure
+#define VIEW_CROSS (0)
 
 static const qreal zoom_rate = 1.08;
 static const QPointF zoom_fix = { -10, -9 };
@@ -647,6 +649,14 @@ void Kinstrument_view::fitView()
 	emit signalViewEvent(e_trans);
 }
 
+void Kinstrument_view::slot_centerOn_day(int date)
+{
+	if (date < 19880101)
+		date = 19880101;
+	time_t utcTime = date_to_utc(date);
+	centerOnLabelW((qreal)utcTime);
+}
+
 void Kinstrument_view::centerOnLabelWH(qreal label_w, qreal label_h)
 {
     qreal x = _scene->label_w_to_x(label_w);
@@ -661,14 +671,76 @@ void Kinstrument_view::centerOnLabelWH(qreal label_w, qreal label_h)
 
 void Kinstrument_view::centerOnLabelW(qreal label_w)
 {
+	int seq = _scene->label_w_to_val_w(label_w);
+	QPointF valPos;
+	bool valid = _scene->get_valPos(seq, valPos);
+	if (!valid) {
+		Kinstrument_view::fitView();
+		return;
+	}
+
+	centerOn(_scene->val_w_to_x(valPos.x()), _scene->val_h_to_y(valPos.y()));
+	onViewChange();
+	std::shared_ptr<view_event_scene_center_change> e_center = std::make_shared<view_event_scene_center_change>((_scene_lu + _scene_rd) / 2);
+	emit signalViewEvent(e_center);
 
 }
-
 
 void Kinstrument_view::centerOnLabelH(qreal label_h)
 {
     
 }
+
+
+void Kinstrument_view::crossOnLabelWH(qreal label_w, qreal label_h)
+{
+    qreal val_w = _scene->label_w_to_val_w(label_w);
+    qreal val_h = _scene->label_h_to_val_h(label_h);
+
+
+	KlogicCross_t* cr = new KlogicCross_t(_scene);
+	cr->setLineWidth(5);
+	cr->setValue(val_w, val_h, 60, 20, 0);
+	cr->setColor(_colorpalette->curve[0].back); //cyan
+	cr->mkGroupItems();
+	cr->setZValue(VIEW_CROSS);
+	_scene->addItem(cr);
+    
+}
+
+
+void Kinstrument_view::slot_crossOn_day(int date)
+{
+	if (date < 19880101)
+		date = 19880101;
+	time_t utcTime = date_to_utc(date);
+	crossOnLabelW((qreal)utcTime);
+}
+
+void Kinstrument_view::crossOnLabelW(qreal label_w)
+{
+	int seq = _scene->label_w_to_val_w(label_w);
+	QPointF valPos;
+	bool valid = _scene->get_valPos(seq, valPos);
+	if (!valid) {
+		return;
+	}
+
+	KlogicCross_t* cr = new KlogicCross_t(_scene);
+	cr->setLineWidth(5);
+	cr->setValue(valPos.x(), valPos.y(), 60, 20, 0);
+	cr->setColor(_colorpalette->curve[2].back); //red
+	cr->mkGroupItems();
+	cr->setZValue(VIEW_CROSS);
+	_scene->addItem(cr);
+}
+
+
+void Kinstrument_view::crossOnLabelH(qreal label_h)
+{
+    
+}
+
 
 }
 }

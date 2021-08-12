@@ -37,8 +37,8 @@ const S4::stkInfo_t* s4qt_data_if::getInfo(const std::string & stkName, const st
 	if (_pData_if->getNowLib() == nullptr || _pData_if->getNowLib()->count(stkName) == 0) {
 	    auto glb_codelist = glb_conf::pInstance()->codelist();
         auto reqlist = std::make_shared<codelist_t>();
-        code_prop_t sh000001 = glb_conf::pInstance()->codelist()->at(mktCodeStr_to_mktCodeInt(stkName));
-        reqlist->insert(std::pair<mktCodeI_t, code_prop_t>(mktCodeStr_to_mktCodeInt(stkName), sh000001));
+        code_prop_t instument_code = glb_conf::pInstance()->codelist()->at(mktCodeStr_to_mktCodeInt(stkName));
+        reqlist->insert(std::pair<mktCodeI_t, code_prop_t>(mktCodeStr_to_mktCodeInt(stkName), instument_code));
 		_pData_if->preload(reqlist, infoReq);
 		while (!_pData_if->preloadReady())
 		{

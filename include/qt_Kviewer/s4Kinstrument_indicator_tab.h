@@ -27,6 +27,8 @@ public slots:
     void paint(Kinstrument_indicator_scene::ind_type type, timeMode_t timeMode);
 	virtual void slotViewEvent(std::shared_ptr<view_event>);
 
+	void slot_centerOn_day(int date);
+	void slot_crossOn_day(int date);
 protected:
     std::shared_ptr<data_panel_t> _data_panel;
     std::map<int, Kinstrument_indicator_scene::indCtx_t> _tab_ctx;

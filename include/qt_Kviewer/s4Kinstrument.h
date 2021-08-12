@@ -34,6 +34,7 @@ public slots:
 	void slot_next_trade(int seq);
     
 	void slot_centerOn_day(int date);
+	void slot_crossOn_day(int date);
 private:
     // K line tab
     Kinstrument_Kline_tab* _K_tab;

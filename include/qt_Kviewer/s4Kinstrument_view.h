@@ -72,10 +72,12 @@ public:
     virtual void fitView();
 
     virtual void centerOnLabelWH(qreal label_w, qreal label_h);
-
     virtual void centerOnLabelW(qreal label_x);
-
     virtual void centerOnLabelH(qreal label_y);
+
+    virtual void crossOnLabelWH(qreal label_w, qreal label_h);
+    virtual void crossOnLabelW(qreal label_x);
+    virtual void crossOnLabelH(qreal label_y);
 signals:
 	//void signalScaleChanged(qreal x_scale, qreal y_scale);
 	//void signalSetTransform(const QTransform&, bool);
@@ -98,6 +100,9 @@ public slots:
 	virtual void slotMouseChanged(qreal scene_x, qreal scene_y);
 
 	virtual void slotViewEvent(std::shared_ptr<view_event>);
+
+    virtual void slot_centerOn_day(int date);
+    virtual void slot_crossOn_day(int date);
 
 
 	bool isPaint() const { return _isPaint; }

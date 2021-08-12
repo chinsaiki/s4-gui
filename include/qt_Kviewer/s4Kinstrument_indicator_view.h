@@ -26,6 +26,7 @@ public:
 		return _timeMode;
 	}
 
+	//virtual void crossOnLabelW(qreal label_x) override;
 
 public slots:
     //virtual void onScaleChanged(qreal x_scale, qreal y_scale) override;
@@ -33,6 +34,8 @@ public slots:
 	virtual void slotSetTransform(const QTransform&, bool) override;
 	virtual void slotMouseChanged(qreal scene_x, qreal scene_y) override;
 	virtual void slotViewEvent(std::shared_ptr<view_event>) override;
+
+	//void slot_crossOn_day(int date);
 
 protected:
 	timeMode_t _timeMode;

@@ -191,6 +191,7 @@ void s4Kviewer::onCallConsole()
 	connect(_console, SIGNAL(signal_load(const std::string&, const std::string&, const std::string&)),
 		this, SLOT(load(const std::string&, const std::string&, const std::string&)));
     connect(_console, &s4console::signal_centerOn_day, this, &s4Kviewer::slot_centerOn_day);
+    connect(_console, &s4console::signal_crossOn_day, this, &s4Kviewer::slot_crossOn_day);
 	_console->setModal(false);
 	_console->show();
 	_console->setGeometry(this->x() + this->width(),
@@ -253,6 +254,11 @@ void s4Kviewer::onButton_last_trade(void)
 void s4Kviewer::slot_centerOn_day(int date)
 {
 	_instrument_tab->slot_centerOn_day(date);
+}
+
+void s4Kviewer::slot_crossOn_day(int date)
+{
+	_instrument_tab->slot_crossOn_day(date);
 }
 
 

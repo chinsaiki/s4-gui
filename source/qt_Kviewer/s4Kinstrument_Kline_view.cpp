@@ -1,5 +1,9 @@
 
 #include "qt_Kviewer/s4Kinstrument_Kline_view.h"
+#include "qt_Kviewer/s4KlogicCross.h"
+
+#define VIEW_Z 100
+#define VIEW_CROSS (VIEW_Z+5)
 
 namespace S4{
 namespace QT{
@@ -26,11 +30,11 @@ void Kinstrument_Kline_view::setCtx(const std::shared_ptr<infKQ_t>& pInfoKQ){
     int n = 0;
     for(const auto& d : *pInfoKQ)
     {
-        if (d->high > ctx.val_h_max()){
-            ctx.set_val_h_max(d->high);
+        if (d->high_fq() > ctx.val_h_max()){
+            ctx.set_val_h_max(d->high_fq());
         }
-        if (d->low < ctx.val_h_min()){
-            ctx.set_val_h_min(d->low);
+        if (d->low_fq() < ctx.val_h_min()){
+            ctx.set_val_h_min(d->low_fq());
         }
         ctx.set_val_w_max(n);
         n++;
@@ -93,30 +97,6 @@ void Kinstrument_Kline_view::slot_next_trade(int next)
     
 }
 
-void Kinstrument_Kline_view::slot_centerOn_day(int date)
-{
-    if (date < 19880101)
-        date = 19880101;
-    time_t utcTime = date_to_utc(date);
-    centerOnLabelW((qreal)utcTime);
-}
-
-void Kinstrument_Kline_view::centerOnLabelW(qreal label_w)
-{
-    int seq = _scene->label_w_to_val_w(label_w);
-    QPointF valPos;
-    bool valid = _scene->get_valPos(seq, valPos);
-    if (!valid){
-        Kinstrument_view::fitView();
-        return;
-    }
-    
-	centerOn(_scene->val_w_to_x(valPos.x()), _scene->val_h_to_y(valPos.y()));
-	onViewChange();
-	std::shared_ptr<view_event_scene_center_change> e_center = std::make_shared<view_event_scene_center_change>((_scene_lu + _scene_rd) / 2);
-	emit signalViewEvent(e_center);
-
-}
 
 } // namespace QT
 } // namespace S4

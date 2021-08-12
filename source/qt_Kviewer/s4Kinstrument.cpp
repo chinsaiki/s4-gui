@@ -67,5 +67,11 @@ void Kinstrument::slot_centerOn_day(int date)
 	_K_tab->slot_centerOn_day(date);
 }
 
+void Kinstrument::slot_crossOn_day(int date)
+{
+	_K_tab->slot_crossOn_day(date);
+	_indicator_tab->slot_crossOn_day(date);
+}
+
 } // namespace QT
 } // namespace S4

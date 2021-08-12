@@ -51,5 +51,18 @@ void Kinstrument_indicator_tab::slotViewEvent(std::shared_ptr<view_event> event)
 }
 
 
+void Kinstrument_indicator_tab::slot_centerOn_day(int date)
+{
+	Kinstrument_indicator_view* _I_view = (Kinstrument_indicator_view*)currentWidget();
+	_I_view->slot_centerOn_day(date);
+}
+
+void Kinstrument_indicator_tab::slot_crossOn_day(int date)
+{
+	Kinstrument_indicator_view* _I_view = (Kinstrument_indicator_view*)currentWidget();
+	_I_view->slot_crossOn_day(date);
+}
+
+
 } // namespace QT
 } // namespace S4

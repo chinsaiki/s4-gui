@@ -21,6 +21,7 @@ signals:
     void signal_load(const std::string&, const std::string&, const std::string&);
 
     void signal_centerOn_day(int date);
+    void signal_crossOn_day(int date);
 public slots:
     void emit_load(const std::string& mktCode, const std::string& stgName, const std::string& orderTblName) {
         emit signal_load(mktCode, stgName, orderTblName);
@@ -28,6 +29,10 @@ public slots:
 
     void emit_centerOn_day(int date) {
         emit signal_centerOn_day(date);
+    }
+
+    void emit_crossOn_day(int date) {
+        emit signal_crossOn_day(date);
     }
 private:
     Ui::s4console *ui;

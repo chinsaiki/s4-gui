@@ -40,6 +40,12 @@ public slots:
 		Kinstrument* K = (Kinstrument*)currentWidget();
         K->slot_centerOn_day(date);
 	}
+
+	void slot_crossOn_day(int date)
+	{
+		Kinstrument* K = (Kinstrument*)currentWidget();
+        K->slot_crossOn_day(date);
+	}
 };
 
 

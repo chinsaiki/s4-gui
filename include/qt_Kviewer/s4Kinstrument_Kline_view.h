@@ -21,13 +21,9 @@ public:
 
     virtual void fitView(void) override;
 
-    virtual void centerOnLabelW(qreal label_x) override;
-
 public slots:
     //seq >=0: next; <0: last
 	void slot_next_trade(int seq);
-
-	void slot_centerOn_day(int date);
 protected:
     int _seq = 0;
 };

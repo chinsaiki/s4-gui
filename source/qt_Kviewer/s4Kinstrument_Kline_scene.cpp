@@ -156,10 +156,10 @@ void Kinstrument_Kline_scene::calcCtx(void)
     _w_map_label.clear();
     for(const auto& d : *_pInfoKQ)
     {
-        if (d->high > ctx.val_h_max()){
+        if (d->high_fq() > ctx.val_h_max()){
             ctx.set_val_h_max(d->high_fq());
         }
-        if (d->low < ctx.val_h_min()){
+        if (d->low_fq() < ctx.val_h_min()){
             ctx.set_val_h_min(d->low_fq());
         }
         ctx.set_val_w_max(n);
@@ -189,7 +189,12 @@ void Kinstrument_Kline_scene::paint_infoKQ(void)
         bar.C = d->close_fq();
         bar.H = d->high_fq();
         bar.L = d->low_fq();
-        bar.Avg = d->prcAvg_fq();
+		bar.Avg = d->prcAvg_fq();
+		//bar.O = d->open;
+		//bar.C = d->close;
+		//bar.H = d->high;
+		//bar.L = d->low;
+		//bar.Avg = d->prcAvg();
 
         if (!bars.size()){
             bar.lastC = bar.O;
@@ -319,7 +324,7 @@ bool Kinstrument_Kline_scene::get_valPos(int w_seq, QPointF& val) const
     }
     
     val.setX(label_w_to_val_w((*_pInfoKQ)[nb]->_time));
-    val.setY((*_pInfoKQ)[nb]->open_fq());
+    val.setY((*_pInfoKQ)[nb]->prcAvg_fq());
 
     return true;
 }
