@@ -63,7 +63,7 @@ void s4SnapViewerWidgetTdxDB::onOpenTdxDB()
 {
 	QString path = QFileDialog::getOpenFileName(this, tr("Open snap database"), "../db", tr("TDX sqlite db files (*.db)"));
 
-	if (!Utils::fileCanBeOpened(path)) {
+	if (!fileCanBeOpened(path)) {
 		QMessageBox::warning(NULL, "warning", "file is not readable!", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 		return;
 	}

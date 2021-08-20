@@ -15,6 +15,10 @@ namespace Ui {
 class DDwidget;
 }
 
+
+namespace S4{
+namespace QT{
+    
 class DDwidget : public QWidget
 {
     Q_OBJECT
@@ -35,5 +39,8 @@ private:
     Ui::DDwidget *ui;
     QString dbPath;
 };
+
+} // namespace QT
+} // namespace S4
 
 #endif // DDWIDGET_H

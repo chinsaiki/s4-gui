@@ -13,6 +13,10 @@ namespace Ui {
 class DbConnectDialog;
 }
 
+namespace S4{
+namespace QT{
+    
+
 class DbConnectDialog : public QDialog
 {
     Q_OBJECT
@@ -33,5 +37,8 @@ private:
     Ui::DbConnectDialog *ui;
     DBHandler *connection;
 };
+
+} // namespace QT
+} // namespace S4
 
 #endif // DBCONNECTDIALOG_H

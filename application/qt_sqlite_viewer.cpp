@@ -7,7 +7,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    S4::SqlViewer w;
+    S4::QT::SqlViewer w;
     w.show();
 
     return a.exec();

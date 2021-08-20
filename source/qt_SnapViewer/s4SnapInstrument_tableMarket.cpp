@@ -94,10 +94,10 @@ void snapInstrument_tableMarket::addSnaps(const infSnap5xQ_ptr& pSnapQ)
     _pSnapQ = pSnapQ;
 
 	QAbstractItemModel* levels = _level_tv->model();
-    ((snapTableModel_level*)levels)->refresh(pSnapQ->back().get());
+    ((snapTableModel_level*)levels)->refresh(pSnapQ->back());
     
 	QAbstractItemModel* infos = _info_tv->model();
-    ((snapTableModel_snapInfo*)infos)->refresh(pSnapQ->back().get());
+    ((snapTableModel_snapInfo*)infos)->refresh(pSnapQ->back());
 
 	((snapInstrument_Kline_scene*)(_snap_Kview->scene()))->setCoorType(coor_type_t::PERCENT);
 	((snapInstrument_Kline_scene*)(_snap_Kview->scene()))->paint(pSnapQ);

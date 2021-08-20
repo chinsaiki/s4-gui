@@ -18,6 +18,7 @@ namespace Ui { class SqlViewer; }
 QT_END_NAMESPACE
 
 namespace S4{
+namespace QT{
 class orderModel;
 class SqlViewer : public QMainWindow
 {
@@ -126,4 +127,4 @@ public:
     }
 };
 
-}
+}}

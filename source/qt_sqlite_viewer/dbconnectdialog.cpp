@@ -2,6 +2,9 @@
 #include "ui_dbconnectdialog.h"
 #include "qt_sqlite_viewer/DBHandler.h"
 
+namespace S4{
+namespace QT{
+    
 DbConnectDialog::DbConnectDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::DbConnectDialog)
@@ -32,7 +35,7 @@ DBHandler *DbConnectDialog::getDBHandler() const
 
 void DbConnectDialog::onOpenFileDialog(const QString &path)
 {
-     if(!Utils::fileCanBeOpened(path)){
+     if(!fileCanBeOpened(path)){
          return;
      }
 
@@ -41,3 +44,7 @@ void DbConnectDialog::onOpenFileDialog(const QString &path)
     auto buttons = ui->buttonBox->buttons();
     ((QPushButton*)buttons[0])->setDisabled(false);
 }
+
+
+} // namespace QT
+} // namespace S4

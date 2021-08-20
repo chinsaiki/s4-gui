@@ -1,4 +1,4 @@
-#include "qt_Kviewer/s4Kinstrument_view.h"
+﻿#include "qt_Kviewer/s4Kinstrument_view.h"
 #include <QDebug>
 #include <QGraphicsLineItem>
 #include <QtCore/qmath.h>
@@ -486,6 +486,7 @@ void Kinstrument_view::paintLabel(QList<QGraphicsItem*>& pGroup, const QPointF& 
 	Klabel_t* label_x = new Klabel_t;
 	label_x->setText(txt);
 
+    
 	if (onLeft) {
 		x -= (shift + label_x->boundingRect().width()) / rx;
 	}
@@ -533,6 +534,7 @@ QGraphicsItemGroup* Kinstrument_view::paintCrosshairAt(const QPointF& scene_pos)
 		QGraphicsLineItem* vline = new QGraphicsLineItem;
 		vline->setLine(scene_pos.x(), _scene_lu.y(), scene_pos.x(), _scene_rd.y());
 		vline->setPen(yPen);
+		//vline->setZValue(100);	//后需要加入groupItem，加入后这里设置的z就无效了(相当于0)，需要通过group设置
 		crossLine.append(vline);
 	}
 
@@ -558,7 +560,7 @@ void Kinstrument_view::paintCrosshair()
 		_scene->removeItem(_crossLine);
 	}
 	_crossLine = paintCrosshairAt(_scene_mouse);
-
+	_crossLine->setZValue(100);
 }
 
 void Kinstrument_view::paintGridLines()
@@ -594,6 +596,7 @@ void Kinstrument_view::paintGridLines()
 		//paintLabel(_gridLines, mapFromScene(x, _scene_lu.y()), txt, _colorpalette->labels[1], 99, false, 0);
 	}
 	_gridLines = _scene->createItemGroup(gridLines);
+	_gridLines->setZValue(98);
 }
 
 void Kinstrument_view::paintGridLabels()
@@ -619,6 +622,7 @@ void Kinstrument_view::paintGridLabels()
 		paintLabel(gridLabels, mapFromScene(x, _scene_lu.y()), txt, _colorpalette->labels[2], 99, false, 0, false);
 	}
 	_gridLabels = _scene->createItemGroup(gridLabels);
+	_gridLines->setZValue(99);
 }
 
 

@@ -12,6 +12,7 @@
 #include "jsonTypes/nw_load_instrument_t.h"
 
 namespace S4{
+namespace QT{
 
 #define HISTORY_ORDER_TREE_ROOT "history-orders"
 
@@ -65,7 +66,7 @@ void SqlViewer::onOpen()
 {
     QString path = QFileDialog::getOpenFileName(this,tr("Open S4 configure json"), "../worksapce", tr("Json files (*.json)"));
 
-    if(!Utils::fileCanBeOpened(path)){
+    if(!QT::fileCanBeOpened(path)){
         QMessageBox::warning(NULL, "warning", "file is not readable!", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
         return;
     }
@@ -271,4 +272,4 @@ void SqlViewer::tabCloseRequestHandler(int index)
     }
 }
 
-}
+}}

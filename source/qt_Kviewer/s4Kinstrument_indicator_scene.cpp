@@ -3,7 +3,7 @@
 #include "qt_Kviewer/s4KlogicBar.h"
 #include "qt_Kviewer/s4KlogicCurve.h"
 #include "qt_Kviewer/s4KlogicRect.h"
-
+#include "qt_common/Utils.h"
 
 namespace S4{
 namespace QT{
@@ -58,8 +58,9 @@ QString Kinstrument_indicator_scene::y_to_label_h(qreal y) const
 {
     qreal val_h = y_to_val_h(y);
     QString txt;
-    txt.sprintf("%0.2f", val_h / 100.0);    //TODO: tdx stock price precision = 1% of Yuan 精度=分
-    return txt;
+    txt.sprintf("%0.2f", val_h);    //TODO: tdx stock price precision = 1% of Yuan 精度=分
+    std::string fmt = fmtStringNumComma(txt.toStdString());
+    return QString::fromStdString(fmt);
 }
 
 //TODO: save for _view to make label
