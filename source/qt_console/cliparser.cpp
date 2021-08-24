@@ -11,27 +11,29 @@ cliparser::cliparser(QWidget *parent, const QString &welcomeText)
 
 }
 
-void cliparser::handlCommand(const QString &command)
+void cliparser::handlCommand(const QString &commands)
 {
-	QStringList split_cmd = command.split(" ", QString::SkipEmptyParts);//.toLower()
-	if (!split_cmd.size()) {
-		printCommandExecutionResults("");
-		return;
-	}
+	QStringList split_cmds = commands.split("&&", QString::SkipEmptyParts);
+	for (auto& command : split_cmds) {
+		QStringList split_cmd = command.split(" ", QString::SkipEmptyParts);//.toLower()
+		if (!split_cmd.size()) {
+			printCommandExecutionResults("");
+			return;
+		}
 
-	if (split_cmd[0] == "ld") {
-		handlCommand_load(split_cmd);
+		if (split_cmd[0] == "ld") {
+			handlCommand_load(split_cmd);
+		}
+		else if (split_cmd[0] == "on") {
+			handlCommand_on(split_cmd);
+		}
+		else if (split_cmd[0] == "cr") {
+			handlCommand_cross(split_cmd);
+		}
+		else {
+			printCommandExecutionResults("Error: unknow command!");
+		}
 	}
-    else if (split_cmd[0] == "on"){
-		handlCommand_on(split_cmd);
-    }
-    else if (split_cmd[0] == "cr"){
-		handlCommand_cross(split_cmd);
-    }
-	else {
-		printCommandExecutionResults("Error: unknow command!");
-	}
-
 
 	//printCommandExecutionResults(command+" done!");
 }
