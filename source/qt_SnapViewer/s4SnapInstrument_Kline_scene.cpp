@@ -175,10 +175,10 @@ std::shared_ptr<infKQ_t> snapInstrument_Kline_scene::check_data(void) const
 
 	std::shared_ptr<infKQ_t> pInfoKQ;
 	if (_KCtx.timeMode == timeMode_t::tDAY) {
-		pInfoKQ = _data_panel->info->pDayKQ;
+		pInfoKQ = _data_panel->info->getDayKQ();
 	}
 	else if (_KCtx.timeMode == timeMode_t::tMINU) {
-		pInfoKQ = _data_panel->info->pMinuKQ;
+		pInfoKQ = _data_panel->info->getMinuKQ();
 	}
 	else {  //TODO
 		return pInfoKQ;
@@ -293,7 +293,7 @@ void snapInstrument_Kline_scene::paint_infoKQ(void)
 
 void snapInstrument_Kline_scene::paint_MAmap(void){
     int n = 0;
-    for(auto& m : *_data_panel->info->pMAlib){
+    for(auto& m : *_data_panel->info->getMAlib()){
         paint_MA(n++, m.second);
     }
 }

@@ -53,7 +53,7 @@ const S4::stkInfo_t* s4qt_data_if::getInfo(const std::string & stkName, const st
 	}
 
 	const S4::stkInfo_t* info = _pData_if->getNowLib()->get(stkName);
-	LCL_INFO("getInfo {:} successd: {:} ~ {:} = {:}", stkName, info->pDayKQ->front()->_date, info->pDayKQ->back()->_date, info->pDayKQ->size());
+	LCL_INFO("getInfo {:} successd: {:} ~ {:} = {:}", stkName, info->getDayKQ()->front()->_date, info->getDayKQ()->back()->_date, info->getDayKQ()->size());
     return info;
 }
 
