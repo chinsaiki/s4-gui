@@ -97,7 +97,7 @@ QString snapInstrument_Kline_scene::x_to_label_w(qreal x) const
         }else if (_KCtx.timeMode == timeMode_t::tMINU) {
             txt.sprintf("%s", utc_to_str(_w_map_label.at(val_w)).c_str());
 		}
-		else if (_KCtx.timeMode == timeMode_t::tSnap) {
+		else if (_KCtx.timeMode == timeMode_t::tSNAP) {
 			txt.sprintf("%s", utc_to_strMinu(_w_map_label.at(val_w)).c_str());
 		}
     }else{
@@ -358,7 +358,7 @@ bool snapInstrument_Kline_scene::get_valPos(int w_seq, QPointF& val) const
 
 void snapInstrument_Kline_scene::paint(const infSnap5xQ_ptr& pSnaps)
 {
-    _KCtx.timeMode = timeMode_t::tSnap;
+    _KCtx.timeMode = timeMode_t::tSNAP;
     calcCtx(pSnaps);
     initSceneCanvas();
     paint_Snap_price(pSnaps);
