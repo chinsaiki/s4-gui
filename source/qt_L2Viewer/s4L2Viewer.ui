@@ -46,7 +46,7 @@
       <string>Mode</string>
      </property>
      <addaction name="action_mode_L2Live"/>
-     <addaction name="action_mode_tdxDB"/>
+     <addaction name="action_mode_dsxDB"/>
     </widget>
     <addaction name="menuMode_2"/>
     <addaction name="actionOpen"/>
@@ -94,9 +94,9 @@
     <string>Ctrl+L</string>
    </property>
   </action>
-  <action name="action_mode_tdxDB">
+  <action name="action_mode_dsxDB">
    <property name="text">
-    <string>TDX DB</string>
+    <string>DSX DB</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+T</string>

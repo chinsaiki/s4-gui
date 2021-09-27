@@ -11,24 +11,24 @@ namespace QT{
 //    void updateTableList();
 
 
-class s4SnapViewerWidgetTdxDB : public s4SnapViewerWidget
+class s4SnapViewerWidgetDsxDB : public s4SnapViewerWidget
 {
     Q_OBJECT
 
 public:
-    explicit s4SnapViewerWidgetTdxDB(QWidget *parent = nullptr);
-    virtual ~s4SnapViewerWidgetTdxDB();
+    explicit s4SnapViewerWidgetDsxDB(QWidget *parent = nullptr);
+    virtual ~s4SnapViewerWidgetDsxDB();
 
 public slots:
-	void onOpenTdxDB();
+	void onOpenDsxDB();
 
 	void closeSnapTab(int index);
 
     void dbTree_doubleClicked(const QModelIndex &index);
-	void openTdxSnapTab(const std::string& db_name, const std::string& table_name);
+	void openDsxSnapTab(const std::string& db_name, const std::string& table_name);
 
-    void nextTdxSnap();
-    // void addTdxSnaps();
+    void nextDsxSnap();
+    // void addDsxSnaps();
 
 signals:
 	void signal_status(const QString&);

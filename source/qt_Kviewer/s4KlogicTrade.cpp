@@ -172,7 +172,7 @@ void KlogicTrade_t::paint_abort_open(size_t i)
 
 	
 
-	//not useful for TDX-style-orders, as they are not alive to next day.
+	//not useful for DSX-style-orders, as they are not alive to next day.
 	if (i > 0) {
 		for (size_t j = i - 1; j > 0; --j) {
 			const auto& trade_j = _history[j];

@@ -58,7 +58,7 @@ QString Kinstrument_indicator_scene::y_to_label_h(qreal y) const
 {
     qreal val_h = y_to_val_h(y);
     QString txt;
-    txt.sprintf("%0.2f", val_h);    //TODO: tdx stock price precision = 1% of Yuan 精度=分
+    txt.sprintf("%0.2f", val_h);    //TODO: dsx stock price precision = 1% of Yuan 精度=分
     std::string fmt = fmtStringNumComma(txt.toStdString());
     return QString::fromStdString(fmt);
 }

@@ -3,7 +3,7 @@
 #  pragma warning(disable: 4189) 
 #endif
 
-#include "qt_SnapViewer/s4SnapViewerWidgetTdxDB.h"
+#include "qt_SnapViewer/s4SnapViewerWidgetDsxDB.h"
 #include "qt_SnapViewer/s4SnapInstrument.h"
 
 #include "common/s4logger.h"
@@ -30,9 +30,9 @@ namespace QT {
 
 //CREATE_LOCAL_LOGGER("qt_SnapViewer")
 
-#define TDX_DB_PREAMBLE QStringLiteral("TDX_")
+#define DSX_DB_PREAMBLE QStringLiteral("DSX_")
 
-s4SnapViewerWidgetTdxDB::s4SnapViewerWidgetTdxDB(QWidget *parent) :
+s4SnapViewerWidgetDsxDB::s4SnapViewerWidgetDsxDB(QWidget *parent) :
     s4SnapViewerWidget(parent)
 {   
 
@@ -53,15 +53,15 @@ s4SnapViewerWidgetTdxDB::s4SnapViewerWidgetTdxDB(QWidget *parent) :
 
 	setLayout(pLayout);
 
-	connect(_tabWidget, &QTabWidget::tabCloseRequested, this, &s4SnapViewerWidgetTdxDB::closeSnapTab);
+	connect(_tabWidget, &QTabWidget::tabCloseRequested, this, &s4SnapViewerWidgetDsxDB::closeSnapTab);
 
-	connect(_treeView, &QTreeView::doubleClicked, this, &s4SnapViewerWidgetTdxDB::dbTree_doubleClicked);
+	connect(_treeView, &QTreeView::doubleClicked, this, &s4SnapViewerWidgetDsxDB::dbTree_doubleClicked);
 }
 
-//打开一个TDX sqlite数据库，并把table添加到dbTree中
-void s4SnapViewerWidgetTdxDB::onOpenTdxDB()
+//打开一个DSX sqlite数据库，并把table添加到dbTree中
+void s4SnapViewerWidgetDsxDB::onOpenDsxDB()
 {
-	QString path = QFileDialog::getOpenFileName(this, tr("Open snap database"), "../db", tr("TDX sqlite db files (*.db)"));
+	QString path = QFileDialog::getOpenFileName(this, tr("Open snap database"), "../db", tr("DSX sqlite db files (*.db)"));
 
 	if (!fileCanBeOpened(path)) {
 		QMessageBox::warning(NULL, "warning", "file is not readable!", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
@@ -84,8 +84,8 @@ void s4SnapViewerWidgetTdxDB::onOpenTdxDB()
 		// 	return;
 		// }
 
-		// S4::sqlite::tdx_snap_t_dbTbl snap_tbl;
-		// std::vector<tdx_snap_t> snaps;
+		// S4::sqlite::dsx_snap_t_dbTbl snap_tbl;
+		// std::vector<dsx_snap_t> snaps;
 
 		// snap_db.read_table_v2(&snap_tbl, dates.back(), snaps);
 		// LCL_INFO("{} snaps has been loaded:", snaps.size());
@@ -94,9 +94,9 @@ void s4SnapViewerWidgetTdxDB::onOpenTdxDB()
 		for (auto& d :dates){
 			Qdates.push_back(QString::fromStdString(d));
 		}
-		newTree(TDX_DB_PREAMBLE + fileInfo.baseName(), Qdates);
+		newTree(DSX_DB_PREAMBLE + fileInfo.baseName(), Qdates);
 
-		_db_list[(TDX_DB_PREAMBLE + fileInfo.baseName()).toStdString()] = path.toStdString();
+		_db_list[(DSX_DB_PREAMBLE + fileInfo.baseName()).toStdString()] = path.toStdString();
 	}
 	catch (std::exception& e) {
 		QMessageBox::warning(NULL, "warning", "load snap db error: " + QString::fromStdString(e.what()) + "!", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
@@ -104,7 +104,7 @@ void s4SnapViewerWidgetTdxDB::onOpenTdxDB()
 	}
 }
 
-void s4SnapViewerWidgetTdxDB::dbTree_doubleClicked(const QModelIndex& index) {
+void s4SnapViewerWidgetDsxDB::dbTree_doubleClicked(const QModelIndex& index) {
 	if (!index.parent().isValid()) return;
 	//if (!index.parent().parent().isValid()) return;
 
@@ -114,12 +114,12 @@ void s4SnapViewerWidgetTdxDB::dbTree_doubleClicked(const QModelIndex& index) {
 	QString str;
 	str += QStringLiteral("当前选中：%1/%2\n").arg(dbName).arg(tableName);
 
-	if (dbName.indexOf(TDX_DB_PREAMBLE) == 0) {
-		openTdxSnapTab(dbName.toStdString(), tableName.toStdString());
+	if (dbName.indexOf(DSX_DB_PREAMBLE) == 0) {
+		openDsxSnapTab(dbName.toStdString(), tableName.toStdString());
 	}
 }
 
-void s4SnapViewerWidgetTdxDB::openTdxSnapTab(const std::string& db_name, const std::string& table_name)
+void s4SnapViewerWidgetDsxDB::openDsxSnapTab(const std::string& db_name, const std::string& table_name)
 {
 	if (_db_list.count(db_name) == 0) {
 		return;
@@ -148,7 +148,7 @@ void s4SnapViewerWidgetTdxDB::openTdxSnapTab(const std::string& db_name, const s
 		//levels_tv->setModel(levels);
 		//levels_tv->setItemDelegate(delegate);
 		//levels_tv->setSelectionBehavior(QAbstractItemView::SelectRows);
-		//connect(levels_tv, SIGNAL(clicked(const QModelIndex&)), this, SLOT(nextTdxSnap(const QModelIndex&)));
+		//connect(levels_tv, SIGNAL(clicked(const QModelIndex&)), this, SLOT(nextDsxSnap(const QModelIndex&)));
 
 		snapInstrument* pInstrument = new snapInstrument(5, this);
 		openSnapTab(snap_tab_name, pInstrument);
@@ -164,7 +164,7 @@ void s4SnapViewerWidgetTdxDB::openTdxSnapTab(const std::string& db_name, const s
 }
 
 
-void s4SnapViewerWidgetTdxDB::nextTdxSnap()
+void s4SnapViewerWidgetDsxDB::nextDsxSnap()
 {
 	int idx = _tabWidget->currentIndex();
 	if (idx < 0) return;
@@ -186,7 +186,7 @@ void s4SnapViewerWidgetTdxDB::nextTdxSnap()
 	// }
 }
 
-void s4SnapViewerWidgetTdxDB::closeSnapTab(int index)
+void s4SnapViewerWidgetDsxDB::closeSnapTab(int index)
 {
 	const QString tabName = _tabWidget->tabText(index);
 
@@ -198,7 +198,7 @@ void s4SnapViewerWidgetTdxDB::closeSnapTab(int index)
 
 }
 
-s4SnapViewerWidgetTdxDB::~s4SnapViewerWidgetTdxDB()
+s4SnapViewerWidgetDsxDB::~s4SnapViewerWidgetDsxDB()
 {
 }
 

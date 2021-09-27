@@ -36,7 +36,7 @@ L2Viewer::L2Viewer(QWidget *parent) :
 	this->setWindowTitle("L2Viewer");
 
 
-	connect(ui->action_mode_tdxDB, &QAction::triggered, this, &L2Viewer::action_mode_L2DB);
+	connect(ui->action_mode_dsxDB, &QAction::triggered, this, &L2Viewer::action_mode_L2DB);
 	connect(ui->action_mode_L2Live, &QAction::triggered, this, &L2Viewer::action_mode_L2Live);
 
     action_mode_L2Live();
@@ -47,12 +47,12 @@ void L2Viewer::action_mode_L2DB()
     qDebug() << "not ready!";
 
 	if (this->windowTitle()==TITLE_L2_DB){
-		// ((s4SnapViewerWidgetTdxDB*)(this->centralWidget()))->onOpenTdxDB();
+		// ((s4SnapViewerWidgetDsxDB*)(this->centralWidget()))->onOpenDsxDB();
 		return;
 	}
-	// s4SnapViewerWidgetTdxDB* pWidget = new s4SnapViewerWidgetTdxDB(this);
-	// connect(ui->actionOpen, &QAction::triggered, pWidget, &s4SnapViewerWidgetTdxDB::onOpenTdxDB);
-	// connect(ui->actionNextSnap, &QAction::triggered, pWidget, &s4SnapViewerWidgetTdxDB::nextTdxSnap);
+	// s4SnapViewerWidgetDsxDB* pWidget = new s4SnapViewerWidgetDsxDB(this);
+	// connect(ui->actionOpen, &QAction::triggered, pWidget, &s4SnapViewerWidgetDsxDB::onOpenDsxDB);
+	// connect(ui->actionNextSnap, &QAction::triggered, pWidget, &s4SnapViewerWidgetDsxDB::nextDsxSnap);
 
 	// this->setCentralWidget(pWidget);
 	this->setWindowTitle(TITLE_L2_DB);

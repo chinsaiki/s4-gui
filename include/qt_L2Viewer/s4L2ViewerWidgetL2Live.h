@@ -37,10 +37,10 @@ public slots:
 	void closeInstrumentTab(const QString& code);
 
     // void dbTree_doubleClicked(const QModelIndex &index);
-	// void openTdxSnapTab(const std::string& db_name, const std::string& table_name);
+	// void openDsxSnapTab(const std::string& db_name, const std::string& table_name);
 
-    // void nextTdxSnap();
-    // void addTdxSnaps();
+    // void nextDsxSnap();
+    // void addDsxSnaps();
 	virtual void closeSnapTab(int index) override;
 signals:
 	void signal_status(const QString&);

@@ -152,7 +152,7 @@ s4Kviewer::s4Kviewer(QWidget *parent) :
 	//	FATAL("getInfo NG");
 	//}
 	//std::vector<S4::s4_history_trade_t> history_trade_data;
-	//emit signal_loadOrdres("sz002810", "tdx_xyzq_history", "to20200531", history_trade_data);
+	//emit signal_loadOrdres("sz002810", "dsx_xyzq_history", "to20200531", history_trade_data);
 	//if (!history_trade_data.size()) {
 	//	FATAL("loadOrdres fail");
 	//}
