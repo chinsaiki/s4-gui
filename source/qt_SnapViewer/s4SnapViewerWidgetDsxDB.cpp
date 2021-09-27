@@ -115,18 +115,14 @@ void s4SnapViewerWidgetDsxDB::dbTree_doubleClicked(const QModelIndex& index) {
 	str += QStringLiteral("当前选中：%1/%2\n").arg(dbName).arg(tableName);
 
 	if (dbName.indexOf(DSX_DB_PREAMBLE) == 0) {
-		openDsxSnapTab(dbName.toStdString(), tableName.toStdString());
+        std::string path = _db_list.at(dbName.toStdString());
+		std::string snap_tab_name_s = (dbName + "-" + tableName).toStdString();
+		openDsxSnapTab(path, tableName.toStdString(), snap_tab_name_s);
 	}
 }
 
-void s4SnapViewerWidgetDsxDB::openDsxSnapTab(const std::string& db_name, const std::string& table_name)
+void s4SnapViewerWidgetDsxDB::openDsxSnapTab(const std::string& path, const std::string& table_name, const std::string& tab_title)
 {
-	if (_db_list.count(db_name) == 0) {
-		return;
-	}
-
-	std::string path = _db_list.at(db_name);
-
 	try {
 		sqlite::DB_t snap_db(path);
 		std::set<std::string> dates = snap_db.get_table_list();
@@ -137,8 +133,7 @@ void s4SnapViewerWidgetDsxDB::openDsxSnapTab(const std::string& db_name, const s
 		infSnap5xQ_ptr pSnapQ = std::make_shared<infSnap5xQ_t>();
 		pSnapQ->fromDB(path, table_name, true);
 
-		std::string snap_tab_name_s = db_name + "-" + table_name;
-		QString snap_tab_name(snap_tab_name_s.c_str());
+		QString snap_tab_name(tab_title.c_str());
 
 		//create new data
 		//QTableView* levels_tv = new QTableView(this);

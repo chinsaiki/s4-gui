@@ -32,9 +32,10 @@
    </widget>
    <widget class="QMenu" name="menuconsole">
     <property name="title">
-     <string>console</string>
+     <string>component</string>
     </property>
     <addaction name="actionCallConsole"/>
+    <addaction name="actionCallSnapViewer"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuconsole"/>
@@ -49,10 +50,30 @@
    <property name="text">
     <string>Exit</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+X</string>
+   </property>
   </action>
   <action name="actionCallConsole">
    <property name="text">
-    <string>Call console</string>
+    <string>console</string>
+   </property>
+   <property name="toolTip">
+    <string>open console</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
+   </property>
+  </action>
+  <action name="actionCallSnapViewer">
+   <property name="text">
+    <string>snap viewer</string>
+   </property>
+   <property name="toolTip">
+    <string>open snap viewer</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
    </property>
   </action>
  </widget>

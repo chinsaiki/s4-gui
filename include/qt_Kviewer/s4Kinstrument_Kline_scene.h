@@ -9,6 +9,7 @@ namespace QT{
 
 class Kinstrument_Kline_scene : public Kinstrument_scene
 {
+    Q_OBJECT
 public:
 	struct KCtx_t {
 		timeMode_t timeMode;
@@ -36,6 +37,12 @@ public:
     virtual bool get_valPos(int w_seq, QPointF& val) const override;
 
 	virtual qreal label_w_to_best_val_h(uint64_t l) const;
+signals:
+    void signal_day_selected(const std::string& instrument_name, int date);
+    
+
+public slots:
+    void slot_bar_selected(qreal bar_seq);
 private:
     std::map<uint64_t, int> _label_map_w;
     std::map<int, uint64_t> _w_map_label;

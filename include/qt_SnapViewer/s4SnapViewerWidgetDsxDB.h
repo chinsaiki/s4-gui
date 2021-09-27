@@ -20,14 +20,14 @@ public:
     virtual ~s4SnapViewerWidgetDsxDB();
 
 public slots:
-	void onOpenDsxDB();
+	virtual void onOpenDsxDB();
 
-	void closeSnapTab(int index);
+	virtual void closeSnapTab(int index);
 
-    void dbTree_doubleClicked(const QModelIndex &index);
-	void openDsxSnapTab(const std::string& db_name, const std::string& table_name);
+    virtual void dbTree_doubleClicked(const QModelIndex &index);
+	virtual void openDsxSnapTab(const std::string& db_path, const std::string& table_name, const std::string& tab_title);
 
-    void nextDsxSnap();
+    virtual void nextDsxSnap();
     // void addDsxSnaps();
 
 signals:

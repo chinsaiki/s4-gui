@@ -156,6 +156,7 @@ void KlogicBarGroup_t::mkGroupItems(void)
         bar->mkGroupItems();
         // _scene->addItem(bar);
         addToGroup(bar);
+        connect(bar, &KlogicBar_t::signal_selected, this, &KlogicBarGroup_t::signal_selected);
     }
 }
 

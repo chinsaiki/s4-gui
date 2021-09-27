@@ -21,6 +21,7 @@ struct logicBarData_t
 //signal Bar for one day or one week and so on...
 class KlogicBar_t : public KlogicItem_t
 {
+    Q_OBJECT
 public:
     enum barType_t{
         BAR_JPN = 0,
@@ -35,6 +36,7 @@ public:
     }
 
     ~KlogicBar_t(){
+
     }
 
     inline void setType(barType_t t){
@@ -60,6 +62,9 @@ public:
     }
 
     virtual void mkGroupItems();
+signals:
+    void signal_selected(qreal seq);
+
 
 protected:
     virtual void mousePressEvent(QGraphicsSceneMouseEvent* event) Q_DECL_OVERRIDE
@@ -70,6 +75,7 @@ protected:
             }
             else {
                 setSelected(true);
+                emit signal_selected(_value.seq);
             }
             showLabel();
         }
@@ -104,6 +110,7 @@ private:
 //not a itemGroup, but list of item, use for add/del items quickly.
 class KlogicBarGroup_t : public KlogicItemGroup_t
 {
+    Q_OBJECT
 public:
     explicit KlogicBarGroup_t(Kinstrument_scene *scene):
         KlogicItemGroup_t(scene)
@@ -131,6 +138,8 @@ public:
     }
 
     virtual void mkGroupItems() override;
+signals:
+    void signal_selected(qreal seq);
 
 protected:
     virtual void mousePressEvent(QGraphicsSceneMouseEvent* event) Q_DECL_OVERRIDE

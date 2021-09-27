@@ -87,6 +87,8 @@ signals:
 	//void signalMouseChanged(qreal scene_x, qreal scene_y);
 
 	void signalViewEvent(std::shared_ptr<view_event>);
+signals:
+    void signal_doubleClickOnDate(int date);
 
 public slots:
     void verticalScrollvalueChanged(int v = 0);

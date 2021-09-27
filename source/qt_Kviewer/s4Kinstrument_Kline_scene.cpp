@@ -211,7 +211,8 @@ void Kinstrument_Kline_scene::paint_infoKQ(void)
     barGroup->setValue(bars);
     barGroup->mkGroupItems();
     barGroup->setZValue(BAR_Z);
-	this->addItem(barGroup);
+    this->addItem(barGroup);
+    connect(barGroup, &KlogicBarGroup_t::signal_selected, this, &Kinstrument_Kline_scene::slot_bar_selected);
 
 	/* paint next day */
 	logicBarData_t nextDay;
@@ -329,6 +330,26 @@ bool Kinstrument_Kline_scene::get_valPos(int w_seq, QPointF& val) const
     return true;
 }
 
+void Kinstrument_Kline_scene::slot_bar_selected(qreal bar_seq)
+{
+    if (_KCtx.timeMode != timeMode_t::tDAY) {
+        return;
+    }
+
+    int val_w = int(bar_seq);
+    int date;
+    if (_w_map_label.count(val_w)) {
+        date = utc_to_date(_w_map_label.at(val_w));
+    }
+    else {
+        return;
+    }
+    std::string iname = "unknown";
+    if (_data_panel && _data_panel->info){
+        iname = _data_panel->info->mktCodeStr();
+    }
+    emit signal_day_selected(iname, date);
+}
 
 } // namespace QT
 } // namespace S4

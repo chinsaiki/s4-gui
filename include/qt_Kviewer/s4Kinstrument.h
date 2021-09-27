@@ -28,6 +28,8 @@ public:
     }
 
     void setInstrument(const data_panel_t& data_panel);
+signals:
+    void signal_day_selected(const std::string& instrument_name, int date);
     
 public slots:
 	//seq >=0: next; <0: last

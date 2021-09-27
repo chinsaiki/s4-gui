@@ -2,11 +2,9 @@
 
 #include <QMainWindow>
 #include <QPushButton>
-//#include "qt\console\cliparser.h"
 #include "qt_console/s4console.h"
-//#include "qt\s4qt_view_k.h"
+#include "qt_SnapViewer/KsnapDialog.h"
 #include "qt_common/s4qt_data_if.h"
-//#include "network/tcp_client.h"
 #include "qt_Kviewer/s4Kviewer_instrumentTab.h"
 #include <QDebug>
 #include <QMouseEvent>
@@ -38,9 +36,11 @@ public slots:
 
     void slot_centerOn_day(int date);
 	void slot_crossOn_day(int date);
+
 signals:
 	void signal_getInfo(const std::string & stkName, const struct S4::stkInfoReq_t& infoReq, class S4::stkInfo_t*& info);
 	void signal_loadOrdres(const std::string & stkName, const std::string & stgName, const std::string & orderTblName, std::vector<S4::s4_history_trade_t>& history_trade_data);
+    void signal_dayK_day_selected(const std::string& instrument_name, int date);
 private:
     Ui::s4Kviewer *ui;
 
@@ -58,7 +58,8 @@ private:
 	QPushButton* button_last_trade;
 	QPushButton* button_next_trade;
 
-	s4console* _console;
+	s4console* _console = nullptr;
+	KsnapDialog* _KsnapViewer = nullptr;
 private:
 	void mouseMoveEvent(QMouseEvent* )
 	{
@@ -70,6 +71,7 @@ private:
 
 	void onOpen();
 	void onCallConsole();
+	void onCallSnapViewer();
 	void onTcpSetup();
 
 

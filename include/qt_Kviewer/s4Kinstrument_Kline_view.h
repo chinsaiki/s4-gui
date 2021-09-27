@@ -20,6 +20,8 @@ public:
     void paint(void);
 
     virtual void fitView(void) override;
+signals:
+    void signal_day_selected(const std::string& instrument_name, int date);
 
 public slots:
     //seq >=0: next; <0: last

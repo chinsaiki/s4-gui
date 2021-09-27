@@ -34,6 +34,8 @@ signals:
 
 	void signalViewEvent(std::shared_ptr<view_event>);
 
+    void signal_day_selected(const std::string& instrument_name, int date);
+    
 public slots:
 	virtual void slotScaleChanged_day(qreal x_scale, qreal y_scale);
 	virtual void slotSetTransform_day(const QTransform&, bool);

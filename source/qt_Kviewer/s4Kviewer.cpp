@@ -24,6 +24,9 @@
 
 using namespace std;
 
+#define TIME_BEFORE_OTF (90000)
+#define TIME_AFTER_OTF (151500)
+
 namespace S4 {
 namespace QT {
 
@@ -37,9 +40,11 @@ s4Kviewer::s4Kviewer(QWidget *parent) :
 	ui->centralwidget->setMouseTracking(true);
 	connect(ui->actionOpen, &QAction::triggered, this, &s4Kviewer::onOpen);
 	connect(ui->actionCallConsole, &QAction::triggered, this, &s4Kviewer::onCallConsole);
+	connect(ui->actionCallSnapViewer, &QAction::triggered, this, &s4Kviewer::onCallSnapViewer);
 
 	this->setMouseTracking(true);
 	_instrument_tab = new Kviewer_instrumentTab(this);
+    connect(_instrument_tab, &Kviewer_instrumentTab::signal_day_selected, this, &s4Kviewer::signal_dayK_day_selected);
 	// _instrument_tab2 = new QTabWidget(this);
 	// _instrument_tab3 = new QTabWidget(this);
 
@@ -187,15 +192,27 @@ void s4Kviewer::onOpen()
 
 void s4Kviewer::onCallConsole()
 {
-	_console = new s4console(this);
-	connect(_console, SIGNAL(signal_load(const std::string&, const std::string&, const std::string&)),
-		this, SLOT(load(const std::string&, const std::string&, const std::string&)));
-    connect(_console, &s4console::signal_centerOn_day, this, &s4Kviewer::slot_centerOn_day);
-    connect(_console, &s4console::signal_crossOn_day, this, &s4Kviewer::slot_crossOn_day);
-	_console->setModal(false);
+    if (!_console){
+        _console = new s4console(this);
+        connect(_console, SIGNAL(signal_load(const std::string&, const std::string&, const std::string&)),
+            this, SLOT(load(const std::string&, const std::string&, const std::string&)));
+        connect(_console, &s4console::signal_centerOn_day, this, &s4Kviewer::slot_centerOn_day);
+        connect(_console, &s4console::signal_crossOn_day, this, &s4Kviewer::slot_crossOn_day);
+        _console->setModal(false);
+    }
 	_console->show();
 	_console->setGeometry(this->x() + this->width(),
 		this->y(), 200, this->height());
+}
+
+void s4Kviewer::onCallSnapViewer()
+{
+	_KsnapViewer = new KsnapDialog(this);
+    connect(this, &s4Kviewer::signal_dayK_day_selected, _KsnapViewer, &KsnapDialog::openSnapDbTable);
+	_KsnapViewer->setModal(false);
+	_KsnapViewer->show();
+	_KsnapViewer->setGeometry(this->x() + this->width(),
+		this->y(), this->width(), this->height());
 }
 
 void s4Kviewer::onTcpSetup()
@@ -298,6 +315,19 @@ void s4Kviewer::showData()
 	// }
 }
 
+// void s4Kviewer::slot_dayK_day_selected(const std::string& instrument_name, int date)
+// {
+//     qDebug() << "slot_dayK_day_selected " << instrument_name.c_str() << " " << date;
+//     std::vector<std::string> snap_db_root = glb_conf::pInstance()->db_snap().snap5x.roots;
+//     if (glb_conf::pInstance()->db_snap().snap5x.otf_root.size()) {
+//         if ((nowWeekDay() > 5 || nowWeekDay() == 0 || nowMinuSec() < TIME_BEFORE_OTF || nowMinuSec() > TIME_AFTER_OTF)) {
+//             LCL_WARN("REG append snap5x otf_root={}", glb_conf::pInstance()->db_snap().snap5x.otf_root)
+//                 snap_db_root.push_back(glb_conf::pInstance()->db_snap().snap5x.otf_root);
+//         }
+//     }
+
+// 	emit signal_showSnapDbTable("test", std::to_string(date), instrument_name);
+// }
 
 
 s4Kviewer::~s4Kviewer()

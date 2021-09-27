@@ -17,6 +17,7 @@ Kinstrument::Kinstrument(QWidget *parent) :
 		_indicator_tab, &Kinstrument_indicator_tab::paint);
 
 	connect(_K_tab, SIGNAL(signalViewEvent(std::shared_ptr<view_event>)), _indicator_tab, SLOT(slotViewEvent(std::shared_ptr<view_event>)));
+    connect(_K_tab, &Kinstrument_Kline_tab::signal_day_selected, this, &Kinstrument::signal_day_selected);
 
     _cyc_tab = new QTabWidget(this);
 	Kinstrument_scene* cyc_scene = new Kinstrument_scene(this);

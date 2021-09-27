@@ -11,6 +11,7 @@ namespace QT{
 Kinstrument_Kline_view::Kinstrument_Kline_view(Kinstrument_Kline_scene* scene, QWidget *parent):
     Kinstrument_view(scene, parent)
 {
+    connect(scene, &Kinstrument_Kline_scene::signal_day_selected, this, &Kinstrument_Kline_view::signal_day_selected);
 
 }
 

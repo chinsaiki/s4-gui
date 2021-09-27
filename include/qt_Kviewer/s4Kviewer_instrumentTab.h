@@ -17,15 +17,21 @@ public:
         QTabWidget(parent)
     {
         setMouseTracking(true);
+        setTabsClosable(true);
+	    connect(this, &QTabWidget::tabCloseRequested, this, &Kviewer_instrumentTab::closeTab);
     }
 
     void addInstrument(const data_panel_t& data_panel){
         //day
         Kinstrument* K = new Kinstrument(this);
         K->setInstrument(data_panel);
-        int i = addTab(K, data_panel.info->name().c_str());
+        connect(K, &Kinstrument::signal_day_selected, this, &Kviewer_instrumentTab::signal_day_selected);
+        int i = addTab(K, data_panel.info->mktCodeStr().c_str());
         setCurrentIndex(i);
 	}
+signals:
+    void signal_day_selected(const std::string& instrument_name, time_date_t date);
+
 
 public slots:
 	//seq >=0: next; <0: last
@@ -46,6 +52,12 @@ public slots:
 		Kinstrument* K = (Kinstrument*)currentWidget();
         K->slot_crossOn_day(date);
 	}
+
+    void closeTab(int index)
+    {
+        removeTab(index);
+    }
+
 };
 
 

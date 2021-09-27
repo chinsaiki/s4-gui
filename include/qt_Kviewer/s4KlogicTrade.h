@@ -42,7 +42,6 @@ protected:
         QGraphicsItemGroup::mousePressEvent(event);
     }
 private:
-    //Kinstrument_Kline_scene* _scene;
 
     std::vector<S4::s4_history_trade_t> _history;
     color_box_t _color_positive;
