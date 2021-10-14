@@ -273,7 +273,7 @@ if (CMAKE_BUILD_TYPE STREQUAL "Release")
   )
 endif()
 ## Additional module components: benchmarks, examples, plugins, tests, tools and install
-if(NOT AI_basic_MODULE)
+if(NOT AS_MODULE)
 
   ## for QT public
   if(Qt5_FOUND AND WIN32 AND TARGET Qt5::qmake AND NOT TARGET Qt5::windeployqt)
