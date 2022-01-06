@@ -112,7 +112,7 @@ namespace S4
                 if (key == dataType_t::High) data.push_back(priceString(iPrice_to_fPrice(snap->high)).c_str());
                 if (key == dataType_t::Low) data.push_back(priceString(iPrice_to_fPrice(snap->low)).c_str());
                 if (key == dataType_t::TotalVolume) data.push_back(snap->vol);
-                if (key == dataType_t::TotalAmount) data.push_back(QString::number((snap->amount)/_KW) + QStringLiteral(" 千万"));
+                if (key == dataType_t::TotalAmount) data.push_back(QString::number((snap->amount)/_fKW) + QStringLiteral(" 千万"));
                 if (key == dataType_t::CurrentVolume) data.push_back(snap->cur_vol);
                 if (key == dataType_t::SellVolume) data.push_back(snap->s_vol); //主动卖出
                 if (key == dataType_t::BuyVolume) data.push_back(snap->b_vol);  //主动买入
